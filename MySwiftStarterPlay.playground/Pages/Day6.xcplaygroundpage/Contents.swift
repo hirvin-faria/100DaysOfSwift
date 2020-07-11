@@ -2,7 +2,7 @@
 
 import Foundation
 
-//DAY 6 - Closures
+//DAY 6 - Closures Part 1
 
 let driving = {
     print("I'm driving in my car")
