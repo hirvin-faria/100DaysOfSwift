@@ -61,7 +61,7 @@ func travelReturnClos() -> (String) -> Void {
 let result = travelReturnClos()
 result("London")
 //or
-let result2 = travelReturnClos()("London")
+//let result2 = travelReturnClos()("London")
 
 
 
