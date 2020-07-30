@@ -28,6 +28,8 @@ class ViewController: UITableViewController {
         }
        
         print(pictures)
+        pictures = pictures.sorted() // Retorna o array em sequencia
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
