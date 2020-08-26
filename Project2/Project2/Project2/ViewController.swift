@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     var countries = [String]()
     var score = 0
     var correctAnswer = 0
+    var counterQuest = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,23 +60,52 @@ class ViewController: UIViewController {
         
         correctAnswer = Int.random(in: 0...2)
         
-        title = countries[correctAnswer].uppercased()
+        title = getTitle()
+    }
+    
+    func getTitle() -> String {
+        let titleScope = "Select: \(countries[correctAnswer].uppercased()) | Score: \(score)"
+        return titleScope
+    }
+    
+    func upgradeCounter() {
+        counterQuest += 1
+    }
+    
+    func dispatchAlert(title: String, message: String, actionTitle: String) {
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: actionTitle, style: .default, handler: askQuestion))
+        present(ac, animated: true)
+    }
+    
+    func restrat(){
+        score = 0
+        counterQuest = 0
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {
         var title: String
+        var message: String
         
-        if sender.tag == correctAnswer {
-            title = "Correct"
-            score += 1
+        if counterQuest < 10 {
+            
+            if sender.tag == correctAnswer {
+                title = "Correct"
+                message = "Your score is \(score)."
+                score += 1
+            } else {
+                title = "Wrong"
+                message = "That's the flag of \(countries[sender.tag])"
+                score -= 1
+            }
+        
+            upgradeCounter()
+            dispatchAlert(title: title, message: message, actionTitle: "Continue")
+        
         } else {
-            title = "Wrong"
-            score -= 1
+            dispatchAlert(title: "Finish", message: "Your score is \(score) in \(counterQuest) trys", actionTitle: "Restrart")
+            restrat()
         }
-        
-        let ac = UIAlertController(title: title, message: "Your score is \(score).", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
-        present(ac, animated: true)
         
     }
     
